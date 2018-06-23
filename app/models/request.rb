@@ -27,6 +27,16 @@ class Request
     waiting_requests = Request.where(:status => "waiting")
     other_requests = self.where(filters.merge(:status.in => ["ongoing", "complete"]))
     requests = waiting_requests + other_requests
+    requests.each do |obj|
+      if obj[:status] == "ongoing"
+        time_elapsed = (Time.now - obj[:ongoing_at]).to_i/60
+        if time_elapsed >= 5
+          obj[:status] = "complete"
+          obj[:completed_at] = obj[:ongoing_at] + 5.minutes
+          obj.update_attributes(:status => "complete", :completed_at => (obj[:ongoing_at] + 5.minutes))
+        end
+      end
+    end
     requests = requests.as_json(only: [:status], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
     return true, [], requests
   end

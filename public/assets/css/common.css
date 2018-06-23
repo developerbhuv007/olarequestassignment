@@ -5,12 +5,12 @@
     border: 8px solid #f3f3f3;
     border-radius: 50%;
     border-top: 8px solid #3498db;
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-    margin-top: calc(50vh - 40px);
-    margin-left: calc(50% - 40px);
+    margin-top: calc(50vh - 20px);
+    margin-left: calc(50% - 20px);
 }
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }

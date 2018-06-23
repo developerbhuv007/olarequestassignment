@@ -1,0 +1,13 @@
+.linkBox {
+	display: inline-block;
+	padding: 60px;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+.linkBox:hover {
+	border: 1px solid #0000ff;
+}
+div#linkWrap {
+    text-align: center;
+    margin-top: 200px;
+}

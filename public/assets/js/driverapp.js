@@ -1,9 +1,23 @@
+var getParams = function (url) {
+    var params = {};
+    var parser = document.createElement('a');
+    parser.href = url;
+    var query = parser.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        params[pair[0]] = decodeURIComponent(pair[1]);
+    }
+    return params;
+};
+
+var params = getParams(window.location.href);
+
 $(document).ready(function() {
-    $params = getParams(window.location.href);
-    $('#driverId').html($params.id);
-    getData($params.id);
+    $('#driverId').html(params.id);
+    getData(params.id);
     $('#refresh').click(function(){
-        getData($params.id);
+        getData(params.id);
     });
     $(document).on('click', '.select', function() {
         $requestId = $(this).attr('data-requestId');
@@ -14,7 +28,7 @@ $(document).ready(function() {
 async function getData(id){
     $response = '';
     await $.ajax({
-        url: 'http://192.168.0.104:5000/api/v1/driver_requests',
+        url: '/api/v1/driver_requests',
         data: {driver_id: id},
         beforeSend: function(){
             $('#loading').css('display', 'block');
@@ -86,11 +100,10 @@ function updateData (response) {
 
 
 async function postData(reqId){
-    $params = getParams(window.location.href);
     $response = '';
     await $.ajax({
-        url: 'http://192.168.0.104:5000/api/v1/assign-request',
-        data: {'driver_id': $params.id, 'request_id': reqId},
+        url: '/api/v1/assign-request',
+        data: {'driver_id': params.id, 'request_id': reqId},
         method: 'POST',
         beforeSend: function(){
             $('#loading').css('display', 'block');
@@ -110,22 +123,9 @@ async function postData(reqId){
 function postDataUpdate (response) {
     if(response.success){
         $('#responseMsg').html('Driver is assigned..').css('color', '#09678c');
-        getData();
+        getData(params.id);
     }
     else{
         $('#responseMsg').html(response.messages.join(', ')).css('color', '#ff0000');;
     }
 }
-
-var getParams = function (url) {
-    var params = {};
-    var parser = document.createElement('a');
-    parser.href = url;
-    var query = parser.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        params[pair[0]] = decodeURIComponent(pair[1]);
-    }
-    return params;
-};
