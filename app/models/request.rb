@@ -19,6 +19,7 @@ class Request
   			end
   		end
   	end
+  	requests = requests.as_json(only: [:status], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
   	return true, [], requests, page, total_pages
   end
 
@@ -56,5 +57,43 @@ class Request
   	filters.merge!(:driver_id => query_params[:driver_id]) unless query_params[:driver_id].blank?
   	filters
   end
+
+  def get_elapsed_time(time_in_seconds)
+  	hours = time_in_seconds / (60 * 60)
+    minutes = (time_in_seconds / 60) % 60
+    seconds = time_in_seconds % 60
+
+    if hours > 0
+    	"#{ hours } hour #{ minutes } min #{ seconds } sec"
+    elsif minutes > 0
+    	"#{ minutes } min #{ seconds } sec"
+    else
+    	"#{ seconds } sec"
+    end
+  end
+
+  def request_id
+  	self.inc_id
+ 	end 
+
+ 	def customer_id
+ 		self.customer.inc_id
+ 	end
+
+ 	def driver_id
+ 		self.driver.inc_id rescue nil
+ 	end
+
+ 	def request_time_elapsed
+ 		get_elapsed_time((Time.now - self.created_at).to_i)
+ 	end
+
+ 	def pickedup_time_elapsed
+ 		get_elapsed_time((Time.now - self.ongoing_at).to_i) rescue nil
+	end
+
+	def complete_time_elapsed
+		get_elapsed_time((Time.now - self.completed_at).to_i) rescue nil
+	end
   
 end
