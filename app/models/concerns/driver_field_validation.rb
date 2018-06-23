@@ -1,4 +1,4 @@
-module CustomerFieldValidation
+module DriverFieldValidation
   extend ActiveSupport::Concern
 
   included do
@@ -9,14 +9,12 @@ module CustomerFieldValidation
     include Mongoid::Timestamps
 
     field :inc_id,      type: Integer
-    field :customer_id, type: String
 
     increments :inc_id, seed: 0
 
 
     ### INDEXES ####
     index({ inc_id: 1 })
-    index({ customer_id: 1})
     ################
     
   end
