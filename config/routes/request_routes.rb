@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       get  "driver_requests"=> "requests#driver_requests"
       post "request"        => "requests#create"
       post "assign-request" => "requests#assign_request"
-
     end
   end
+  get '*unmatched_route', :to => 'error#not_found'
 end
