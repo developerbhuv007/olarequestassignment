@@ -1,11 +1,16 @@
 class Api::V1::RequestsController < ApiController
   
   # checking for request and driver id before assigning request to driver
-  before_action :set_driver,  only: [:assign_request]
+  before_action :set_driver,  only: [:assign_request, :driver_requests]
   before_action :set_request, only: [:assign_request]
   
   def index
   	success, messages, requests_list = Request.get_all(request_params)
+  	render :json => {success: success, messages: messages, requests_list: requests_list}
+  end
+
+  def driver_requests
+  	success, messages, requests_list = Request.get_driver_requests(driver_requests_params)
   	render :json => {success: success, messages: messages, requests_list: requests_list}
   end
 
@@ -36,8 +41,12 @@ class Api::V1::RequestsController < ApiController
   	end
   end
 
+  def driver_requests_params
+  	params.permit(:driver_id, :status)
+  end	
+
   def request_params
-  	params.permit(:status, :driver_id, :customer_id, :page)
+  	params.permit(:status, :driver_id, :customer_id)
   end
 
   def create_request_params

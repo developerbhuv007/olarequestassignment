@@ -2,7 +2,10 @@ class Request
   include RequestFieldValidation
 
   def self.get_all(query_params)
-  	filters = get_request_filters(query_params)
+  	success, messages, filters = get_request_filters(query_params)
+    if !success
+      return success, messages, []
+    end
   	requests = self.where(filters)
   	# updating the request status if time elapsed is 5 or more than 5 minutes after coming to ongoing status
   	requests.each do |obj|
@@ -17,6 +20,18 @@ class Request
   	end
   	requests = requests.as_json(only: [:status], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
   	return true, [], requests
+  end
+
+  def self.get_driver_requests(query_params)
+    success, messages, filters = get_driver_requests_filters(query_params)
+    if !success
+      return success, messages, []
+    end
+    waiting_requests = Request.where(:status => "waiting")
+    other_requests = self.where(filters.merge(:status.in => ["ongoing", "complete"]))
+    requests = waiting_requests + other_requests
+    requests = requests.as_json(only: [:status], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
+    return true, [], requests
   end
 
   def self.create_request(query_params)
@@ -48,10 +63,43 @@ class Request
 
   def self.get_request_filters(query_params)
   	filters = {}
+    success = true
+    messages = []
   	filters.merge!(:status => query_params[:status]) unless query_params[:status].blank?
-  	filters.merge!(:customer_id => query_params[:customer_id]) unless query_params[:customer_id].blank?
-  	filters.merge!(:driver_id => query_params[:driver_id]) unless query_params[:driver_id].blank?
-  	filters
+    if query_params[:driver_id].present?
+      @driver = Driver.find_by(:inc_id => query_params[:driver_id].to_i) rescue nil
+      if @driver.nil?
+        success, messages = false, ["Driver not found!"]
+      else
+        filters.merge!(:driver_id => @driver.id)
+      end
+    end
+
+    if query_params[:customer_id].present?
+      @customer = Customer.find_by(:inc_id => query_params[:customer_id].to_i) rescue nil
+      if @customer.nil?
+        success, messages = false, ["Customer not found!"]
+      else
+        filters.merge!(:customer_id => @customer.id)
+      end
+    end
+  	return success, messages, filters
+  end
+
+  def self.get_driver_requests_filters(query_params)
+    filters = {}
+    success = true
+    messages = []
+    filters.merge!(:status => query_params[:status]) unless query_params[:status].blank?
+    if query_params[:driver_id].present?
+      @driver = Driver.find_by(:inc_id => query_params[:driver_id].to_i) rescue nil
+      if @driver.nil?
+        success, messages = false, ["Driver not found!"]
+      else
+        filters.merge!(:driver_id => @driver.id)
+      end
+    end
+    return success, messages, filters
   end
 
   def get_elapsed_time(time_in_seconds)

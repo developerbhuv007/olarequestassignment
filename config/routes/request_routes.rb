@@ -4,10 +4,10 @@ Rails.application.routes.draw do
 
       # request routes
       get  "requests"       => "requests#index"
+      get  "driver_requests"=> "requests#driver_requests"
       post "request"        => "requests#create"
       post "assign-request" => "requests#assign_request"
 
     end
   end
-  get '*unmatched_route', to: 'error#not_found'
 end
