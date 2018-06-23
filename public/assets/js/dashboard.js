@@ -38,7 +38,7 @@ function updateData (response) {
             $('#dashboardData').append("<tr>"+
             "<td>"+ v.request_id +"</td>"+
             "<td>"+ v.customer_id +"</td>"+
-            "<td>"+ v.complete_time_elapsed +"</td>"+
+            "<td>"+ v.request_time_elapsed +"</td>"+
             "<td>"+ v.status +"</td>"+
             "<td>"+ v.driver_id +"</td>"+
         "</tr>");

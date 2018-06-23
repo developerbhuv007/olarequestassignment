@@ -59,10 +59,13 @@ function updateData (response) {
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span class='label'>Request:</span> <span>"+ v.request_time_elapsed +"</span>"+
+                    "<span class='label'>Request:</span> <span>"+ v.request_time_elapsed +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
-                    "<span class='label'>Pickup:</span> <span>"+ v.pickedup_time_elapsed +"</span>"+
+                    "<span class='label'>Picked Up:</span> <span>"+ v.pickedup_time_elapsed +" ago</span>"+
+                "</div>"+
+                "<div class='row3'>"+
+                    "<span class='label'>Complete:</span> <span>"+ v.complete_time_elapsed +" ago</span>"+
                 "</div>"+
             "</div>");
             }
@@ -73,7 +76,7 @@ function updateData (response) {
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span>"+ v.request_time_elapsed +"</span>"+
+                    "<span>"+ v.request_time_elapsed +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
                     "<button class='select' data-requestId="+ v.request_id +">Select</button>"+
@@ -87,10 +90,10 @@ function updateData (response) {
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span class='label'>Request:</span> <span>"+ v.request_time_elapsed +"</span>"+
+                    "<span class='label'>Request:</span> <span>"+ v.request_time_elapsed +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
-                    "<span class='label'>Pickup:</span> <span>"+ v.pickedup_time_elapsed +"</span>"+
+                    "<span class='label'>Picked Up:</span> <span>"+ v.pickedup_time_elapsed +" ago</span>"+
                 "</div>"+
             "</div>");
             }
@@ -123,9 +126,9 @@ async function postData(reqId){
 function postDataUpdate (response) {
     if(response.success){
         $('#responseMsg').html('Driver is assigned..').css('color', '#09678c');
-        getData(params.id);
     }
     else{
-        $('#responseMsg').html(response.messages.join(', ')).css('color', '#ff0000');;
+        $('#responseMsg').html(response.messages.join(', ')).css('color', '#ff0000');
     }
+    getData(params.id);
 }

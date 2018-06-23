@@ -45,6 +45,7 @@ class Request
   	# first will create customer
   	# then will create request since it belongs to the specified customer
   	return false, ["Customer id is required!"], {} unless query_params[:customer_id].present?
+    return false, ["Customer id already registered!"], {} if Customer.where(:customer_id => query_params[:customer_id]).count > 0 
   	@customer = Customer.create(:customer_id => query_params[:customer_id])
   	if @customer.present?
   		request = Request.create(:customer => @customer)
@@ -119,11 +120,11 @@ class Request
  	end 
 
  	def customer_id
- 		self.customer.inc_id
+ 		self.customer.customer_id
  	end
 
  	def driver_id
- 		self.driver.inc_id rescue nil
+ 		self.driver.inc_id rescue 'N/A'
  	end
 
  	def request_time_elapsed
