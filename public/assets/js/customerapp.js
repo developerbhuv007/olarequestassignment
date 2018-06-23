@@ -6,7 +6,7 @@ $(document).ready(function() {
 async function postData(id){
     $response = '';
     await $.ajax({
-        url: 'http://192.168.0.104:5000/api/v1/request',
+        url: '/api/v1/request',
         data: {'customer_id': id},
         method: 'POST',
         beforeSend: function(){

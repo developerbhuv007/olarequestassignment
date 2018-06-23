@@ -8,7 +8,7 @@ $(document).ready(function() {
 async function getData(){
     $response = '';
     await $.ajax({
-        url: 'http://192.168.0.104:5000/api/v1/requests',
+        url: '/api/v1/requests',
         beforeSend: function(){
             $('#loading').css('display', 'block');
         },
