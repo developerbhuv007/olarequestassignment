@@ -11,8 +11,10 @@ module RequestFieldValidation
     belongs_to :driver,   class_name: "Driver",  optional: true
     belongs_to :customer, class_name: "Customer"
 
-    field :inc_id,  type: Integer
-    field :status,  type: String, default: 'waiting'
+    field :inc_id,       type: Integer
+    field :status,       type: String, default: 'waiting'
+    field :ongoing_at,   type: DateTime
+    field :completed_at, type: DateTime
 
     increments :inc_id, seed: 0
 

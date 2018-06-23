@@ -8,7 +8,7 @@ module DriverFieldValidation
     include ActiveModel::Validations
     include Mongoid::Timestamps
 
-    field :inc_id,      type: Integer
+    field :inc_id, type: Integer
 
     increments :inc_id, seed: 0
 
