@@ -1,0 +1,14 @@
+table{
+    border: 1px solid #ddd;
+    background-color: #f3f3f3;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 7px 15px;
+}
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}

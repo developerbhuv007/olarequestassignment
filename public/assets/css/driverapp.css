@@ -1,0 +1,44 @@
+table{
+    border: 1px solid #ddd;
+    background-color: #f3f3f3;
+    border-collapse: collapse;
+    width: 100%
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 7px 15px;
+    vertical-align: top;
+}
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+.box {
+    border: 1px solid #ddd;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    font-size: 13px;
+}
+.box > div {
+    padding: 3px;
+    overflow: auto;
+    clear: both;
+}
+#responseMsg {
+    margin-top: 25px;
+    font-size: 13px;
+}
+.row1 > span:first-child {
+    float: left;
+    font-weight: bold;
+}
+.row1 > span:nth-child(2) {
+    float: right;
+    font-weight: bold;
+}
+.label {
+    font-weight: bold;
+}
