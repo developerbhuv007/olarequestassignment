@@ -3,11 +3,7 @@ class Request
 
   def self.get_all(query_params)
   	filters = get_request_filters(query_params)
-  	total_requests = self.where(filters)
-  	total_pages = (total_requests.count.to_f/PER_PAGE_LIMIT).ceil
-  	page = (query_params[:page] || 1).to_i
-  	requests = total_requests.limit(PER_PAGE_LIMIT).offset((page - 1)*PER_PAGE_LIMIT)
-
+  	requests = self.where(filters)
   	# updating the request status if time elapsed is 5 or more than 5 minutes after coming to ongoing status
   	requests.each do |obj|
   		if obj[:status] == "ongoing"
@@ -20,7 +16,7 @@ class Request
   		end
   	end
   	requests = requests.as_json(only: [:status], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
-  	return true, [], requests, page, total_pages
+  	return true, [], requests
   end
 
   def self.create_request(query_params)

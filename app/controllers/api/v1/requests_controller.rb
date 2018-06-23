@@ -5,8 +5,8 @@ class Api::V1::RequestsController < ApiController
   before_action :set_request, only: [:assign_request]
   
   def index
-  	success, messages, requests_list, page, total_pages = Request.get_all(request_params)
-  	render :json => {success: success, messages: messages, requests_list: requests_list, page: page, total_pages: total_pages}
+  	success, messages, requests_list = Request.get_all(request_params)
+  	render :json => {success: success, messages: messages, requests_list: requests_list}
   end
 
   def create
@@ -37,7 +37,7 @@ class Api::V1::RequestsController < ApiController
   end
 
   def request_params
-  	params.permit(:status, :driver_id, :customer_id)
+  	params.permit(:status, :driver_id, :customer_id, :page)
   end
 
   def create_request_params
