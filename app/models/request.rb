@@ -23,10 +23,7 @@ class Request
   end
 
   def self.get_driver_requests(query_params)
-    success, messages, filters = get_driver_requests_filters(query_params)
-    if !success
-      return success, messages, []
-    end
+    filters = get_driver_requests_filters(query_params)
     waiting_requests = Request.where(:status => "waiting")
     other_requests = self.where(filters.merge(:status.in => ["ongoing", "complete"]))
     requests = waiting_requests + other_requests
@@ -88,18 +85,9 @@ class Request
 
   def self.get_driver_requests_filters(query_params)
     filters = {}
-    success = true
-    messages = []
     filters.merge!(:status => query_params[:status]) unless query_params[:status].blank?
-    if query_params[:driver_id].present?
-      @driver = Driver.find_by(:inc_id => query_params[:driver_id].to_i) rescue nil
-      if @driver.nil?
-        success, messages = false, ["Driver not found!"]
-      else
-        filters.merge!(:driver_id => @driver.id)
-      end
-    end
-    return success, messages, filters
+    filters.merge!(:driver_id => query_params[:driver].id)
+    filters
   end
 
   def get_elapsed_time(time_in_seconds)

@@ -42,7 +42,8 @@ class Api::V1::RequestsController < ApiController
   end
 
   def driver_requests_params
-  	params.permit(:driver_id, :status)
+  	response = params.permit(:driver_id, :status)
+  	response.merge!(:driver => @driver)
   end	
 
   def request_params
