@@ -1,0 +1,21 @@
+.form-field {
+    display: inline-block;
+}
+.form-field > div {
+    padding: 20px;
+}
+.form-field > input {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    text-indent: 10px;
+    outline: none;
+}
+button#submitData {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+#responseMsg {
+    margin-top: 25px;
+    font-size: 13px;
+}
