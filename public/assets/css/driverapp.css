@@ -27,10 +27,6 @@ button {
     overflow: auto;
     clear: both;
 }
-#responseMsg {
-    margin-top: 25px;
-    font-size: 13px;
-}
 .row1 > span:first-child {
     float: left;
     font-weight: bold;

@@ -15,7 +15,3 @@ button#submitData {
     padding: 10px 20px;
     cursor: pointer;
 }
-#responseMsg {
-    margin-top: 25px;
-    font-size: 13px;
-}

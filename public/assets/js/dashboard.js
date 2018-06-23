@@ -17,7 +17,7 @@ async function getData(){
             $('#loading').css('display', 'none');
         },
         error: function(xhr, status, error){
-            $response = error;
+            $('#responseMsg').html('Something went wrong!').css('color', '#ff0000');
             $('#loading').css('display', 'none');
         }
     });

@@ -17,8 +17,8 @@ async function postData(id){
             $response = result;
         },
         error: function(xhr, status, error){
-            $response = error;
             $('#loading').css('display', 'none');
+            $('#responseMsg').html('Something went wrong!').css('color', '#ff0000');
         }
     });
     updateData($response);
@@ -29,6 +29,6 @@ function updateData (response) {
         $('#responseMsg').html('Request is raised, waiting for a driver...').css('color', '#09678c');
     }
     else{
-        $('#responseMsg').html(response.messages.join(', ')).css('color', '#ff0000');;
+        $('#responseMsg').html(response.messages.join(', ')).css('color', '#ff0000');
     }
 }

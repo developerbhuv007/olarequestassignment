@@ -39,7 +39,7 @@ async function getData(id){
         },
         error: function(xhr, status, error){
             $('#loading').css('display', 'none');
-            $response = error;
+            $('#responseMsg').html('Something went wrong!').css('color', '#ff0000');
         }
     });
     updateData($response);
@@ -114,7 +114,7 @@ async function postData(reqId){
         },
         error: function(xhr, status, error){
             $('#loading').css('display', 'none');
-            $response = error;
+            $('#responseMsg').html('Something went wrong!').css('color', '#ff0000');
         }
     });
     postDataUpdate($response);
