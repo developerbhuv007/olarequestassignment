@@ -16,3 +16,5 @@ gem 'figaro'
 gem 'rack-cors'
 gem 'sinatra', '2.0.0.beta2'
 gem 'unicorn'
+gem 'pubnub', '~> 4.0.21'
+

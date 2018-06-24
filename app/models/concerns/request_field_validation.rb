@@ -33,5 +33,21 @@ module RequestFieldValidation
     ####### validations #######
     validates :status, :inclusion => { :in => STATUSES }
 
+    after_create :publish_ride_info_channel
+
+    def publish_ride_info_channel
+      driver_ids_list = self.nearest_driver_ids.map { |id| Driver.find(id).inc_id }
+
+      message_to_publish = {
+        :request => self.as_json(only: [:status], methods: [:customer_id, :request_time_elapsed, :request_id]),
+        :driver_ids => driver_ids_list,
+        :message_type => "ride_request"
+      }
+      $pubnub.publish(
+      channel: "ride-request",
+      message: message_to_publish
+      )
+    end
+
   end
 end
