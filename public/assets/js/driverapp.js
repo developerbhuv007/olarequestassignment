@@ -17,8 +17,8 @@ $(document).ready(function() {
 
     //initializing pubnub
     var $pubnub = new PubNub({
-       publishKey : 'pub-c-4e7712e8-7488-4fe1-8f0d-af48b82b0656',
-       subscribeKey : 'sub-c-47a91fd0-77d1-11e8-a728-026b18d394b5'
+       publishKey : 'pub-c-2bcb63a4-1624-4030-9c41-9e86289dda08',
+       subscribeKey : 'sub-c-530a60fa-77f9-11e8-af21-a6b3764c9f3f'
     })
 
     $pubnub.subscribe({
