@@ -1,5 +1,4 @@
 class RideStatusUpdateJob
-  include Resque::Plugins::UniqueJob
   @queue = :status_update_job_queue
 
   def self.perform
