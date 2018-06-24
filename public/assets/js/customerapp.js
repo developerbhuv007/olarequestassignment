@@ -16,7 +16,7 @@ $(document).ready(function() {
             $('#responseMsg').html('Longitude is required!').css('color', '#ff0000');
             return;
         }
-        if($('#longitude').val() > 5 || $('#latitude').val() < 0){
+        if($('#longitude').val() > 5 || $('#longitude').val() < 0){
             $('#responseMsg').html('Longitude value should be between 0 to 5').css('color', '#ff0000');
             return;
         }
