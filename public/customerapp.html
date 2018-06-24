@@ -14,17 +14,55 @@
     </div>
     <center>
         <div style='width: 60%; margin-top: 150px;'>
-            <div class='form-field'>
-                <div class='label'>
-                    Customer ID
+            <form onsubmit='return false' novalidate>
+                <table>
+                    <tr>
+                        <td>
+                            <div class='form-field'>
+                                <div class='label'>
+                                    Customer ID
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class='form-field'>
+                                <input type='text' name='customer_id' id='customer_id' placeholder='Enter Customer ID' />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class='form-field'>
+                                <div class='label'>
+                                    Latitude
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class='form-field'>
+                                <input type='number' min='0' max='5' name='latitude' id='latitude' />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class='form-field'>
+                                <div class='label'>
+                                    Longitude
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class='form-field'>
+                                <input type='number' min='0' max='5' name='longitude' id='longitude' />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class='submit'>
+                    <button id='submitData' type='submit'>RIDE NOW</button>
                 </div>
-            </div>
-            <div class='form-field'>
-                <input type='text' name='customer_id' id='customer_id' placeholder='Enter Customer ID' />
-            </div>
-            <div class='submit'>
-                <button id='submitData'>RIDE NOW</button>
-            </div>
+            </form>
         </div>
         <div id='responseMsg'></div>
     </center>
