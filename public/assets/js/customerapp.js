@@ -4,19 +4,19 @@ $(document).ready(function() {
             $('#responseMsg').html('Customer id is required!').css('color', '#ff0000');
             return;
         }
-        else if($('#latitude').val() === ''){
+        if($('#latitude').val() === ''){
             $('#responseMsg').html('Latitude is required!').css('color', '#ff0000');
             return;
         }
-        else if($('#latitude').val() > 5 || $('#latitude').val() < 0){
+        if($('#latitude').val() > 5 || $('#latitude').val() < 0){
             $('#responseMsg').html('Latitude value should be between 0 to 5').css('color', '#ff0000');
             return;
         }
-        else if($('#longitude').val() === ''){
+        if($('#longitude').val() === ''){
             $('#responseMsg').html('Longitude is required!').css('color', '#ff0000');
             return;
         }
-        else if($('#longitude').val() > 5 || $('#latitude').val() < 0){
+        if($('#longitude').val() > 5 || $('#latitude').val() < 0){
             $('#responseMsg').html('Longitude value should be between 0 to 5').css('color', '#ff0000');
             return;
         }
