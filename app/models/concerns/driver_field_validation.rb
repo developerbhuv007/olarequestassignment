@@ -8,7 +8,9 @@ module DriverFieldValidation
     include ActiveModel::Validations
     include Mongoid::Timestamps
 
-    field :inc_id, type: Integer
+    field :inc_id,    type: Integer
+    field :latitude,  type: Integer
+    field :longitude, type: Integer
 
     increments :inc_id, seed: 0
 

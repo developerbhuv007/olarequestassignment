@@ -11,10 +11,14 @@ module RequestFieldValidation
     belongs_to :driver,   class_name: "Driver",  optional: true
     belongs_to :customer, class_name: "Customer"
 
-    field :inc_id,       type: Integer
-    field :status,       type: String, default: 'waiting'
-    field :ongoing_at,   type: DateTime
-    field :completed_at, type: DateTime
+    field :inc_id,             type: Integer
+    field :status,             type: String, default: 'waiting'
+    field :ongoing_at,         type: DateTime
+    field :completed_at,       type: DateTime
+    field :latitude,           type: Integer
+    field :longitude,          type: Integer
+    field :nearest_driver_ids, type: Array, default: []
+
 
     increments :inc_id, seed: 0
 
@@ -27,7 +31,7 @@ module RequestFieldValidation
     STATUSES = %w(waiting ongoing complete)
 
     ####### validations #######
-    validates :status, :inclusion => { :in => STATUSES}
-    
+    validates :status, :inclusion => { :in => STATUSES }
+
   end
 end
