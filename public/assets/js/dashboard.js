@@ -8,7 +8,7 @@ $(document).ready(function() {
 async function getData(){
     $response = '';
     await $.ajax({
-        url: '/api/v1/requests',
+        url: '/api/v2/requests',
         beforeSend: function(){
             $('#loading').css('display', 'block');
         },
@@ -33,6 +33,7 @@ function updateData (response) {
             "<th>Time Elapsed</th>"+
             "<th>Status</th>"+
             "<th>Driver</th>"+
+            "<th>Location</th>"+
         "</tr>");
         $.each($list, function(i, v){
             $('#dashboardData').append("<tr>"+
@@ -41,6 +42,7 @@ function updateData (response) {
             "<td>"+ v.request_time_elapsed +"</td>"+
             "<td>"+ v.status +"</td>"+
             "<td>"+ v.driver_id +"</td>"+
+            "<td>"+ v.latitude +", "+ v.longitude +"</td>"+
         "</tr>");
         });
     }
