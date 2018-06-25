@@ -76,7 +76,7 @@ class Request
       return success, messages, []
     end
     requests = self.where(filters)
-    updating the request status if time elapsed is 5 or more than 5 minutes after coming to ongoing status
+    # updating the request status if time elapsed is 5 or more than 5 minutes after coming to ongoing status
     requests.each do |obj|
       if obj[:status] == "ongoing"
         time_elapsed = (Time.now - obj[:ongoing_at]).to_i/60
