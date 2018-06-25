@@ -1,8 +1,8 @@
 require 'pusher'
 
-Pusher.app_id = '549384'
-Pusher.key = '634bcc3a90137cfc5b38'
-Pusher.secret = '23cfdd855a68b5155068'
-Pusher.cluster = 'ap2'
+Pusher.app_id = Figaro.env.pusher_app_id
+Pusher.key = Figaro.env.pusher_key
+Pusher.secret = Figaro.env.pusher_secret
+Pusher.cluster = Figaro.env.pusher_cluster
 Pusher.logger = Rails.logger
 Pusher.encrypted = true

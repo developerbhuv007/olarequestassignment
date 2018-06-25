@@ -149,10 +149,7 @@ class Request
         :driver_ids => driver_ids_list,
         :message_type => "ride_already_assigned"
       }
-      $pubnub.publish(
-      channel: "ride-request",
-      message: message_to_publish
-      )
+      Pusher.trigger('ride-request', 'ride-already-assigned', message_to_publish)
     end
     
     return success, [], query_params[:request]
@@ -227,11 +224,7 @@ class Request
       :driver_ids => driver_ids_list,
       :message_type => "ride_completed"
     }
-    $pubnub.publish(
-      channel: "ride-request",
-      message: message_to_publish
-    )
-    return true
+    Pusher.trigger('ride-request', 'ride-completed', message_to_publish)
   end
 
   def request_id

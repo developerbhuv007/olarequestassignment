@@ -43,10 +43,7 @@ module RequestFieldValidation
         :driver_ids => driver_ids_list,
         :message_type => "ride_request"
       }
-      $pubnub.publish(
-      channel: "ride-request",
-      message: message_to_publish
-      )
+      Pusher.trigger('ride-request', 'ride-arrived', message_to_publish)
     end
 
   end
