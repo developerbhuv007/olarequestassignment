@@ -34,6 +34,7 @@ module OlaApi
     config.eager_load_paths << Rails.root.join('lib')
 
     # default adapter for all asynchronous tasks
+    config.active_job.queue_adapter = :resque
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
         origins '*'

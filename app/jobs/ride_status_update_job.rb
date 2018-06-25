@@ -5,23 +5,9 @@ class RideStatusUpdateJob
   	begin
   		Request.where(:status => "ongoing").each do |request|
 	    	if ((Time.now - request.ongoing_at).to_i/60) >= 5
-	    		status = request.update_attributes(:status => "complete", :complete_at => (request.ongoing_at + 5.minutes))
+	    		status = request.update_attributes(:status => "complete", :completed_at => (request.ongoing_at + 5.minutes))
 	    		if status
-	    			# driver ids list to filterout to which drivers this should affect
-				    begin 
-				      driver_ids_list = [request.driver.inc_id]
-				      message_to_publish = {
-				        :request => request.as_json(only: [:status], methods: [:customer_id, :request_time_elapsed, :request_id, :pickedup_time_elapsed, :complete_time_elapsed]),
-				        :driver_ids => driver_ids_list,
-				        :message_type => "ride_completed"
-				      }
-			      	$pubnub.publish(
-				      	channel: "ride-request",
-				      	message: message_to_publish
-				      )
-			      rescue Exception => e
-			      	LogsHistory.create(:error_type => "pubnub", :error_message => e.message)
-			      end
+				    puts request.publish_ride_complete_message
 	    		end
 	    	end
 	  	end

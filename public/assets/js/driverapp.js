@@ -28,7 +28,7 @@ $(document).ready(function() {
     // pubnub listener
     $pubnub.addListener({
        message: function(message) {
-           console.log(message);
+           // console.log(message);
            if(message.message.message_type === 'ride_request'){
                 if(message.message.driver_ids.indexOf(parseInt(params.id)) !== -1){
                     var k = $('.waitingBox').length;
@@ -67,12 +67,12 @@ $(document).ready(function() {
             }
             else if(message.message.message_type === 'ride_completed'){
                 if(message.message.driver_ids.indexOf(parseInt(params.id)) !== -1){
-                     for(var i=0; i < $('.waitingBox').length; i++){
-                         if($('#reqIdOn'+i).html() == message.message.request.inc_id){
+                     for(var i=0; i < $('.ongoing').length; i++){
+                         if($('#reqIdOn'+i).html() == message.message.request.request_id){
                             $('#onBox'+i).remove();
-                            $('#ongoingBox').append("<div class='ongoing box' id='onBox"+i+"'>"+
+                            $('#completeBox').append("<div class='completed box'>"+
                                 "<div class='row1'>"+
-                                    "<span>Req Id: <span id='reqIdOn"+i+"'>"+ message.message.request.request_id +"</span></span>"+
+                                    "<span>Req Id: <span>"+ message.message.request.request_id +"</span></span>"+
                                     "<span>Cust Id: <span>"+ message.message.request.customer_id +"</span></span>"+
                                 "</div>"+
                                 "<div class='row2'>"+
@@ -80,6 +80,9 @@ $(document).ready(function() {
                                 "</div>"+
                                 "<div class='row3'>"+
                                     "<span class='label'>Picked Up:</span> <span>"+ message.message.request.pickedup_time_elapsed +" ago</span>"+
+                                "</div>"+
+                                "<div class='row3'>"+
+                                    "<span class='label'>Complete:</span> <span>"+ message.message.request.complete_time_elapsed +" ago</span>"+
                                 "</div>"+
                             "</div>");
                          }
@@ -126,7 +129,8 @@ function updateData (response) {
         $('#completeBox').html('');
         $('#waitingBox').html('');
         $('#ongoingBox').html('');
-        var j = 0;
+        var waiting_count = 0;
+        var ongoing_count = 0;
         $.each($list, function(i, v){
             if(v.status === 'complete'){
                 $('#completeBox').append("<div class='completed box'>"+
@@ -146,7 +150,7 @@ function updateData (response) {
             "</div>");
             }
             else if(v.status === 'waiting'){
-                $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+j+"'>"+
+                $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+waiting_count+"'>"+
                 "<div class='row1'>"+
                     "<span>Req Id: <span id='reqIdWait"+j+"'>"+ v.request_id +"</span></span>"+
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
@@ -158,12 +162,12 @@ function updateData (response) {
                     "<button class='select' data-requestId="+ v.request_id +">Select</button>"+
                 "</div>"+
             "</div>");
-                j = j + 1;
+                waiting_count = waiting_count + 1;
             }
             else if(v.status === 'ongoing'){
-                $('#ongoingBox').append("<div class='ongoing box'>"+
+                $('#ongoingBox').append("<div class='ongoing box' id='onBox"+ongoing_count+"'>"+
                 "<div class='row1'>"+
-                    "<span>Req Id: <span>"+ v.request_id +"</span></span>"+
+                    "<span>Req Id: <span id='reqIdOn"+ongoing_count+"'>"+ v.request_id +"</span></span>"+
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
@@ -173,6 +177,7 @@ function updateData (response) {
                     "<span class='label'>Picked Up:</span> <span>"+ v.pickedup_time_elapsed +" ago</span>"+
                 "</div>"+
             "</div>");
+                ongoing_count = ongoing_count + 1;
             }
         });
     }

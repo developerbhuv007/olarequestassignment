@@ -140,7 +140,6 @@ class Request
     query_params[:request][:status] = "ongoing"
     query_params[:request][:ongoing_at] = Time.now
     query_params[:request][:driver_id] = query_params[:driver].id
-    
     if success
       # driver ids list to filterout to which drivers this should affect
       driver_ids_list = query_params[:request].nearest_driver_ids - [query_params[:driver].id]
@@ -219,6 +218,19 @@ class Request
     else
     	"#{ seconds } sec"
     end
+  end
+
+  def publish_ride_complete_message
+    driver_ids_list = [self.driver.inc_id]
+    message_to_publish = {
+      :request => self.as_json(only: [:status], methods: [:customer_id, :request_time_elapsed, :request_id, :pickedup_time_elapsed, :complete_time_elapsed]),
+      :driver_ids => driver_ids_list,
+      :message_type => "ride_completed"
+    }
+    $pubnub.publish(
+      channel: "ride-request",
+      message: message_to_publish
+    )
   end
 
   def request_id
