@@ -22,4 +22,5 @@ gem 'redis-rails'
 gem 'redis-namespace'
 gem 'resque'
 gem 'resque-scheduler'
+gem 'pusher'
 
