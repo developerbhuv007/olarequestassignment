@@ -28,6 +28,7 @@ $(document).ready(function() {
     // pubnub listener
     $pubnub.addListener({
        message: function(message) {
+           console.log(message);
            if(message.message.message_type === 'ride_request'){
                 if(message.message.driver_ids.indexOf(parseInt(params.id)) !== -1){
                     $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+i+"'>"+

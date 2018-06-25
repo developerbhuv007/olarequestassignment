@@ -76,17 +76,17 @@ class Request
       return success, messages, []
     end
     requests = self.where(filters)
-    # updating the request status if time elapsed is 5 or more than 5 minutes after coming to ongoing status
-    # requests.each do |obj|
-    #   if obj[:status] == "ongoing"
-    #     time_elapsed = (Time.now - obj[:ongoing_at]).to_i/60
-    #     if time_elapsed >= 5
-    #       obj[:status] = "complete"
-    #       obj[:completed_at] = obj[:ongoing_at] + 5.minutes
-    #       obj.update_attributes(:status => "complete", :completed_at => (obj[:ongoing_at] + 5.minutes))
-    #     end
-    #   end
-    # end
+    updating the request status if time elapsed is 5 or more than 5 minutes after coming to ongoing status
+    requests.each do |obj|
+      if obj[:status] == "ongoing"
+        time_elapsed = (Time.now - obj[:ongoing_at]).to_i/60
+        if time_elapsed >= 5
+          obj[:status] = "complete"
+          obj[:completed_at] = obj[:ongoing_at] + 5.minutes
+          obj.update_attributes(:status => "complete", :completed_at => (obj[:ongoing_at] + 5.minutes))
+        end
+      end
+    end
     requests = requests.as_json(only: [:status, :latitude, :longitude], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
     return true, [], requests
   end
@@ -99,16 +99,16 @@ class Request
     end
     other_requests = self.where(filters)
     requests = waiting_requests + other_requests
-    # requests.each do |obj|
-    #   if obj[:status] == "ongoing"
-    #     time_elapsed = (Time.now - obj[:ongoing_at]).to_i/60
-    #     if time_elapsed >= 5
-    #       obj[:status] = "complete"
-    #       obj[:completed_at] = obj[:ongoing_at] + 5.minutes
-    #       obj.update_attributes(:status => "complete", :completed_at => (obj[:ongoing_at] + 5.minutes))
-    #     end
-    #   end
-    # end
+    requests.each do |obj|
+      if obj[:status] == "ongoing"
+        time_elapsed = (Time.now - obj[:ongoing_at]).to_i/60
+        if time_elapsed >= 5
+          obj[:status] = "complete"
+          obj[:completed_at] = obj[:ongoing_at] + 5.minutes
+          obj.update_attributes(:status => "complete", :completed_at => (obj[:ongoing_at] + 5.minutes))
+        end
+      end
+    end
     requests = requests.as_json(only: [:status, :latitude, :longitude], methods: [:request_id, :customer_id, :driver_id, :request_time_elapsed, :pickedup_time_elapsed, :complete_time_elapsed])
     return true, [], requests
   end
