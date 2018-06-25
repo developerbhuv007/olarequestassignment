@@ -152,7 +152,7 @@ function updateData (response) {
             else if(v.status === 'waiting'){
                 $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+waiting_count+"'>"+
                 "<div class='row1'>"+
-                    "<span>Req Id: <span id='reqIdWait"+j+"'>"+ v.request_id +"</span></span>"+
+                    "<span>Req Id: <span id='reqIdWait"+waiting_count+"'>"+ v.request_id +"</span></span>"+
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
