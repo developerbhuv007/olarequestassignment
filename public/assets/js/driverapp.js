@@ -31,9 +31,10 @@ $(document).ready(function() {
            console.log(message);
            if(message.message.message_type === 'ride_request'){
                 if(message.message.driver_ids.indexOf(parseInt(params.id)) !== -1){
-                    $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+i+"'>"+
+                    var k = $('.waitingBox').length;
+                    $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+k+"'>"+
                         "<div class='row1'>"+
-                            "<span>Req Id: <span id='reqIdWait"+i+"'>"+ message.message.request.request_id +"</span></span>"+
+                            "<span>Req Id: <span id='reqIdWait"+k+"'>"+ message.message.request.request_id +"</span></span>"+
                             "<span>Cust Id: <span>"+ message.message.request.customer_id +"</span></span>"+
                         "</div>"+
                         "<div class='row2'>"+
@@ -50,6 +51,16 @@ $(document).ready(function() {
                     for(var i=0; i < $('.waitingBox').length; i++){
                         if($('#reqIdWait'+i).html() == message.message.request.inc_id){
                             $('#waitBox'+i).remove();
+                            var id = 0;
+                            $('.waitingBox').each(function(){
+                              if ($(this).attr('id') !== ("waitBox" + id)){
+                                var request_id = $(this).attr('id').replace("waitBox", "reqIdWait")
+                                $(this).attr("id", ("waitBox" + id));
+                                $("#" + request_id).attr("id", ("reqIdWait" + id))
+                              }
+                              id = id + 1;
+                            });
+                            return false;
                         }
                     }
                }
@@ -115,6 +126,7 @@ function updateData (response) {
         $('#completeBox').html('');
         $('#waitingBox').html('');
         $('#ongoingBox').html('');
+        var j = 0;
         $.each($list, function(i, v){
             if(v.status === 'complete'){
                 $('#completeBox').append("<div class='completed box'>"+
@@ -134,9 +146,9 @@ function updateData (response) {
             "</div>");
             }
             else if(v.status === 'waiting'){
-                $('#waitingBox').append("<div class='waitingBox box'>"+
+                $('#waitingBox').append("<div class='waitingBox box' id='waitBox"+j+"'>"+
                 "<div class='row1'>"+
-                    "<span>Req Id: <span>"+ v.request_id +"</span></span>"+
+                    "<span>Req Id: <span id='reqIdWait"+j+"'>"+ v.request_id +"</span></span>"+
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
@@ -146,6 +158,7 @@ function updateData (response) {
                     "<button class='select' data-requestId="+ v.request_id +">Select</button>"+
                 "</div>"+
             "</div>");
+                j = j + 1;
             }
             else if(v.status === 'ongoing'){
                 $('#ongoingBox').append("<div class='ongoing box'>"+
