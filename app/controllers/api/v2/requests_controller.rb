@@ -10,6 +10,9 @@ class Api::V2::RequestsController < ApiController
   end
 
   def driver_requests
+    Pusher.trigger('my-channel', 'my-event', {
+      message: 'hello world'
+    })
   	success, messages, requests_list = Request.get_driver_requests_v2(driver_requests_params)
   	render :json => {success: success, messages: messages, requests_list: requests_list}
   end

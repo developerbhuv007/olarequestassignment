@@ -231,6 +231,7 @@ class Request
       channel: "ride-request",
       message: message_to_publish
     )
+    return true
   end
 
   def request_id
