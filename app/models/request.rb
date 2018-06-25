@@ -240,15 +240,18 @@ class Request
  	end
 
  	def request_time_elapsed
- 		get_elapsed_time((Time.now - self.created_at).to_i)
+ 		# get_elapsed_time((Time.now - self.created_at).to_i)
+    (Time.now - self.created_at).to_i
  	end
 
  	def pickedup_time_elapsed
- 		get_elapsed_time((Time.now - self.ongoing_at).to_i) rescue nil
+ 		# get_elapsed_time((Time.now - self.ongoing_at).to_i) rescue nil
+    (Time.now - self.ongoing_at).to_i rescue nil
 	end
 
 	def complete_time_elapsed
-		get_elapsed_time((Time.now - self.completed_at).to_i) rescue nil
+		# get_elapsed_time((Time.now - self.completed_at).to_i) rescue nil
+    (Time.now - self.completed_at).to_i rescue nil
 	end
   
 end

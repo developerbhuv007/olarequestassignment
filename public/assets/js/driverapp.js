@@ -34,7 +34,7 @@ $(document).ready(function() {
                     "<span>Cust Id: <span>"+ data.request.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span>"+ data.request.request_time_elapsed +" ago</span>"+
+                    "<span>"+ secondsTimeSpanToHMS(data.request.request_time_elapsed) +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
                     "<button class='select' data-requestId="+ data.request.request_id +">Select</button>"+
@@ -74,13 +74,13 @@ $(document).ready(function() {
                             "<span>Cust Id: <span>"+ data.request.customer_id +"</span></span>"+
                         "</div>"+
                         "<div class='row2'>"+
-                            "<span class='label'>Request:</span> <span>"+ data.request.request_time_elapsed +" ago</span>"+
+                        "<span class='label'>Request:</span> <span>"+ secondsTimeSpanToHMS(data.request.request_time_elapsed) +" ago</span>"+
                         "</div>"+
                         "<div class='row3'>"+
-                            "<span class='label'>Picked Up:</span> <span>"+ data.request.pickedup_time_elapsed +" ago</span>"+
+                            "<span class='label'>Picked Up:</span> <span>"+ secondsTimeSpanToHMS(data.request.pickedup_time_elapsed) +" ago</span>"+
                         "</div>"+
                         "<div class='row3'>"+
-                            "<span class='label'>Complete:</span> <span>"+ data.request.complete_time_elapsed +" ago</span>"+
+                            "<span class='label'>Complete:</span> <span>"+ secondsTimeSpanToHMS(data.request.complete_time_elapsed) +" ago</span>"+
                         "</div>"+
                     "</div>");
                 }
@@ -135,13 +135,13 @@ function updateData (response) {
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span class='label'>Request:</span> <span>"+ v.request_time_elapsed +" ago</span>"+
+                    "<span class='label'>Request:</span> <span>"+ secondsTimeSpanToHMS(v.request_time_elapsed) +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
-                    "<span class='label'>Picked Up:</span> <span>"+ v.pickedup_time_elapsed +" ago</span>"+
+                    "<span class='label'>Picked Up:</span> <span>"+ secondsTimeSpanToHMS(v.pickedup_time_elapsed) +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
-                    "<span class='label'>Complete:</span> <span>"+ v.complete_time_elapsed +" ago</span>"+
+                    "<span class='label'>Complete:</span> <span>"+ secondsTimeSpanToHMS(v.complete_time_elapsed) +" ago</span>"+
                 "</div>"+
             "</div>");
             }
@@ -152,7 +152,7 @@ function updateData (response) {
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span>"+ v.request_time_elapsed +" ago</span>"+
+                    "<span>"+ secondsTimeSpanToHMS(v.request_time_elapsed) +" ago</span>"+
                 "</div>"+
                 "<div class='row3'>"+
                     "<button class='select' data-requestId="+ v.request_id +">Select</button>"+
@@ -167,10 +167,10 @@ function updateData (response) {
                     "<span>Cust Id: <span>"+ v.customer_id +"</span></span>"+
                 "</div>"+
                 "<div class='row2'>"+
-                    "<span class='label'>Request:</span> <span>"+ v.request_time_elapsed +" ago</span>"+
+                    "<span class='label'>Request:</span> <span class='ongoing_formatted_request_time'>"+ secondsTimeSpanToHMS(v.request_time_elapsed) +" ago</span><span style='display: none' class='ongoing_request_time_in_seconds'>"+ v.request_time_elapsed +"</span>"+
                 "</div>"+
                 "<div class='row3'>"+
-                    "<span class='label'>Picked Up:</span> <span>"+ v.pickedup_time_elapsed +" ago</span>"+
+                    "<span class='label'>Picked Up:</span> <span class='ongoing_formatted_pickedup_time'>"+ secondsTimeSpanToHMS(v.pickedup_time_elapsed) +" ago</span><span style='display: none' class='ongoing_pickedup_time_in_seconds'>"+ v.pickedup_time_elapsed +"</span>"+
                 "</div>"+
             "</div>");
                 ongoing_count = ongoing_count + 1;
@@ -179,6 +179,27 @@ function updateData (response) {
     }
 }
 
+function secondsTimeSpanToHMS(s) {
+    var h = Math.floor(s/3600); //Get whole hours
+    s -= h*3600;
+    var m = Math.floor(s/60); //Get remaining minutes
+    s -= m*60;
+    return h+" hour "+(m < 10 ? '0'+m : m)+" min "+(s < 10 ? '0'+s : s)+ " sec"; //zero padding on minutes and seconds
+}
+
+setInterval(update_timer, 1000);
+
+function update_timer(){
+
+    seconds = parseInt($(".ongoing_request_time_in_seconds").html()) + 1
+    $(".ongoing_request_time_in_seconds").html(seconds);
+    $(".ongoing_formatted_request_time").html(secondsTimeSpanToHMS(seconds) + ' ago');
+
+    seconds = parseInt($(".ongoing_pickedup_time_in_seconds").html()) + 1
+    $(".ongoing_pickedup_time_in_seconds").html(seconds);
+    $(".ongoing_formatted_pickedup_time").html(secondsTimeSpanToHMS(seconds) + ' ago');
+
+}
 
 async function postData(reqId){
     $response = '';

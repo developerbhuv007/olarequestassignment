@@ -39,7 +39,7 @@ function updateData (response) {
             $('#dashboardData').append("<tr>"+
             "<td>"+ v.request_id +"</td>"+
             "<td>"+ v.customer_id +"</td>"+
-            "<td>"+ v.request_time_elapsed +"</td>"+
+            "<td>"+ secondsTimeSpanToHMS(v.request_time_elapsed) +"</td>"+
             "<td>"+ v.status +"</td>"+
             "<td>"+ v.driver_id +"</td>"+
             "<td>"+ v.latitude +", "+ v.longitude +"</td>"+
@@ -49,4 +49,12 @@ function updateData (response) {
     else {
         $('#tableWrap').html('No data!');
     }
+}
+
+function secondsTimeSpanToHMS(s) {
+    var h = Math.floor(s/3600); //Get whole hours
+    s -= h*3600;
+    var m = Math.floor(s/60); //Get remaining minutes
+    s -= m*60;
+    return h+" hour "+(m < 10 ? '0'+m : m)+" min "+(s < 10 ? '0'+s : s)+ " sec"; //zero padding on minutes and seconds
 }
